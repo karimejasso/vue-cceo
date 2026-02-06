@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
 const name = "vue dinamico" ;
 const styleColor = "color:blue";
 const arrayColores = ["ble","red","morado"];
@@ -15,11 +15,30 @@ const increment = () => {
   console.log('aumentar contador');
   counter.value ++;
 };
-</script>
+const decrement = () => {
+  console.log('descontar contador');
+  counter.value --;
+};
+const reset = () => (counter.value = 0);
 
+const classCounter = computed(() => {
+  if (counter.value === 0){
+    return 'zero'
+  }
+  if (counter.value > 0){
+    return 'positive'
+  }
+    if (counter.value < 0){
+    return 'negative'
+  }
+
+})
+</script>
 <template>
   <button @click="increment">aumentar</button>
-  <h2>{{ counter }}</h2>
+  <button @click="decrement">decrement</button>
+  <button @click="reset">reset</button>
+  <h2 :class="counter > 0 ? 'positive' : 'negative' ">{{ counter }}</h2>
   <button v-on:click.right.prevent="handleClick('texto right')">activame right</button>
   <button @click="handleClick('texto left')">activame left</button>
   <button @click.middle="handleClick('texto middle')">activame middle</button>
@@ -41,5 +60,14 @@ const increment = () => {
 <style>
 h1 {
     color: aqua;
+}
+.positive{
+  color: green;
+}
+.negative{
+  color: brown;
+}
+.zero{
+  color: rgb(236, 121, 5);
 }
 </style>
