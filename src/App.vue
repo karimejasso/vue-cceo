@@ -33,11 +33,26 @@ const classCounter = computed(() => {
   }
 
 })
+
+const arrayFav = ref ([])
+const add = () => {
+  arrayFav.value.push(counter.value)
+}
+
+const bloqk = computed(() => {
+  const numSearch = arrayFav.value.find(num => num === counter.value)
+  console.log(numSearch)
+  if(numSearch === 0) return true
+  return numSearch ? true : false;
+})
 </script>
+
 <template>
   <button @click="increment">aumentar</button>
   <button @click="decrement">decrement</button>
   <button @click="reset">reset</button>
+  <button @click="add" :disabled="bloqk">add</button>
+  {{ arrayFav }}
   <h2 :class="counter > 0 ? 'positive' : 'negative' ">{{ counter }}</h2>
   <button v-on:click.right.prevent="handleClick('texto right')">activame right</button>
   <button @click="handleClick('texto left')">activame left</button>
